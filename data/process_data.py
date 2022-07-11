@@ -37,7 +37,7 @@ def clean_data(df):
     categories.columns = category_colnames
     for column in categories:
         # set each value to be the last character of the string
-        categories[column] = categories[column].apply(lambda x : int(x[-1]))
+        categories[column] = categories[column].apply(lambda x : bool(x[-1]))
     df.drop("categories", axis=1, inplace=True)
     df = pd.concat([df, categories], axis=1)
     if df.duplicated().sum() > 0:
@@ -54,7 +54,7 @@ def save_data(df, database_filename):
     Output: None
     '''
     engine = create_engine(f'sqlite:///{database_filename}')
-    df.to_sql('disaster_df', engine, index=False)
+    df.to_sql('disaster_df', engine, index=False, if_exists="replace")
     pass  
 
 
