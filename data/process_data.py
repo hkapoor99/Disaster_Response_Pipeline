@@ -37,7 +37,7 @@ def clean_data(df):
     categories.columns = category_colnames
     for column in categories:
         # set each value to be the last character of the string
-        categories[column] = categories[column].apply(lambda x : bool(x[-1]))
+        categories[column] = categories[column].apply(lambda x : int(bool(x[-1])))
     df.drop("categories", axis=1, inplace=True)
     df = pd.concat([df, categories], axis=1)
     if df.duplicated().sum() > 0:
